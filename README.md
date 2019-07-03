@@ -10,7 +10,6 @@ http://taskmaster.us-east-2.elasticbeanstalk.com/
 
 
 ## Description of any issues you encountered during deployment.
-<<<<<<< HEAD
 After deploying to elastic beanstalk I am having Error Code: AccessDeniedException; 
 
 # Lab 27: Structuring Data with NoSQL
