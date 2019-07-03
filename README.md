@@ -21,4 +21,4 @@ Lab 26 code was used and new routes were added to it.
 Following routes were added/edited per lab requirements
 1. /task route was edited
 2. /users/{name}/tasks was added
-3. /tasks/{id}/state/{assignee} was added
+3. /tasks/{id}/assign/{assignee} was added
