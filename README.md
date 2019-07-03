@@ -19,6 +19,7 @@ After deploying to elastic beanstalk I am having Error Code: AccessDeniedExcepti
 Lab 26 code was used and new routes were added to it.
 
 ## ChangeLog
-Following routes were added.
-
-After deploying to elastic beanstalk I am having permission issue to connect to my dynamoDB. But adding the correct policy to my EC2 instance I was able to deploy correctly. 
+Following routes were added/edited per lab requirements
+1. /task route was edited
+2. /users/{name}/tasks was added
+3. /tasks/{id}/state/{assignee} was added
