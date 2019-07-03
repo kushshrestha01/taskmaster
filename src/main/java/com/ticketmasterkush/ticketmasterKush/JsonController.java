@@ -63,7 +63,7 @@ public class JsonController {
         return t;
     }
 
-    @PutMapping("/tasks/{id}/state/{assignee}")
+    @PutMapping("/tasks/{id}/assign/{assignee}")
     public Task putTask(@PathVariable UUID id, @PathVariable String assignee) {
         Task t = taskRepository.findById(id).get();
         t.setAssignee(assignee);
@@ -71,6 +71,4 @@ public class JsonController {
         taskRepository.save(t);
         return t;
     }
-
-
 }
