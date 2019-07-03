@@ -16,6 +16,11 @@ public class JsonController {
     @Autowired
     TaskRepository taskRepository;
 
+    @GetMapping("/")
+    public String gethome() {
+        return "home";
+    }
+
     @GetMapping("/task")
     public List<Task> getTask(){
         List<Task> all = (List)taskRepository.findAll();
@@ -23,9 +28,15 @@ public class JsonController {
     }
 
     @PostMapping("/task")
-    public List<Task> postTask(String title, String description, String status) {
-        Task newTask = new Task(title, description, status);
-        taskRepository.save(newTask);
+    public List<Task> postTask(@RequestParam String title, @RequestParam String description, @RequestParam(required = false, defaultValue = "") String assignee) {
+        Task newTask;
+        if(assignee.equals("")){
+            newTask = new Task(title, description);
+            taskRepository.save(newTask);
+        } else {
+            newTask = new Task(title, description, assignee);
+            taskRepository.save(newTask);
+        }
         List<Task> all = (List)taskRepository.findAll();
         return all;
     }
@@ -39,10 +50,27 @@ public class JsonController {
             t.setStatus("Accepted");
         } else if(t.getStatus().equals("Accepted")){
             t.setStatus("Finished");
-        } else {
+        } else if(t.getStatus()== null) {
             t.setStatus("Available");
         }
         taskRepository.save(t);
         return t;
     }
+
+    @GetMapping("/users/{name}/tasks")
+    public List<Task> taskWithName(@PathVariable String name){
+        List<Task> t = taskRepository.findByAssignee(name);
+        return t;
+    }
+
+    @PutMapping("/tasks/{id}/state/{assignee}")
+    public Task putTask(@PathVariable UUID id, @PathVariable String assignee) {
+        Task t = taskRepository.findById(id).get();
+        t.setAssignee(assignee);
+        t.setStatus("Assigned");
+        taskRepository.save(t);
+        return t;
+    }
+
+
 }

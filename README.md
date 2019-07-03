@@ -10,6 +10,7 @@ http://taskmaster.us-east-2.elasticbeanstalk.com/
 
 
 ## Description of any issues you encountered during deployment.
+<<<<<<< HEAD
 After deploying to elastic beanstalk I am having Error Code: AccessDeniedException; 
 
 # Lab 27: Structuring Data with NoSQL
@@ -20,3 +21,4 @@ Lab 26 code was used and new routes were added to it.
 ## ChangeLog
 Following routes were added.
 
+After deploying to elastic beanstalk I am having permission issue to connect to my dynamoDB. But adding the correct policy to my EC2 instance I was able to deploy correctly. 
