@@ -28,15 +28,13 @@ public class JsonController {
     }
 
     @PostMapping("/task")
-    public List<Task> postTask(@RequestParam String title, @RequestParam String description, @RequestParam(required = false, defaultValue = "") String assignee) {
-        Task newTask;
-        if(assignee.equals("")){
-            newTask = new Task(title, description);
-            taskRepository.save(newTask);
+    public List<Task> postTask(@RequestBody Task task) {
+        if(task.getAssignee().trim().isEmpty()){
+            task.setStatus("Available");
         } else {
-            newTask = new Task(title, description, assignee);
-            taskRepository.save(newTask);
+            task.setStatus("Assigned");
         }
+        taskRepository.save(task);
         List<Task> all = (List)taskRepository.findAll();
         return all;
     }
@@ -71,6 +69,4 @@ public class JsonController {
         taskRepository.save(t);
         return t;
     }
-
-
 }

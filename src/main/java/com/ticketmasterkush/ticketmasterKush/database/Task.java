@@ -21,13 +21,11 @@ public class Task {
         this.title = title;
         this.description = description;
         this.assignee = assignee;
-        this.status = "Assigned";
     }
 
     public Task(String title, String description) {
         this.title = title;
         this.description = description;
-        this.status = "Available";
     }
 
     @DynamoDBHashKey
