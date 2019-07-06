@@ -21,6 +21,7 @@ public class JsonController {
         return "home";
     }
 
+    @CrossOrigin
     @GetMapping("/task")
     public List<Task> getTask(){
         List<Task> all = (List)taskRepository.findAll();
@@ -55,6 +56,7 @@ public class JsonController {
         return t;
     }
 
+    @CrossOrigin
     @GetMapping("/users/{name}/tasks")
     public List<Task> taskWithName(@PathVariable String name){
         List<Task> t = taskRepository.findByAssignee(name);
