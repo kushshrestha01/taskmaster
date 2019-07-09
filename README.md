@@ -10,7 +10,6 @@ http://taskmaster.us-east-2.elasticbeanstalk.com/
 
 
 ## Description of any issues you encountered during deployment.
-<<<<<<< HEAD
 After deploying to elastic beanstalk I am having Error Code: AccessDeniedException; 
 
 # Lab 27: Structuring Data with NoSQL
@@ -22,4 +21,4 @@ Lab 26 code was used and new routes were added to it.
 Following routes were added/edited per lab requirements
 1. /task route was edited
 2. /users/{name}/tasks was added
-3. /tasks/{id}/state/{assignee} was added
+3. /tasks/{id}/assign/{assignee} was added

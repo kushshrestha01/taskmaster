@@ -37,6 +37,7 @@ public class TaskTest {
     private static final String testTitle = "testTitle";
     private static final String testDescription = "testDescription";
     private static final String testAssignee = "testAssignee";
+    private static final String testStatus = "testAssiged";
 
     @Before
     public void setup() throws Exception {
@@ -52,6 +53,7 @@ public class TaskTest {
     @Test
     public void readWriteTestCase() {
         Task test = new Task(testTitle, testDescription, testAssignee);
+        test.setStatus("Assigned");
         taskRepository.save(test);
 
         List<Task> result = (List<Task>)taskRepository.findAll();
