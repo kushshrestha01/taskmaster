@@ -6,22 +6,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin
+@RequestMapping("")
 public class JsonController {
+
+    private S3Client s3Client;
 
     @Autowired
     TaskRepository taskRepository;
 
-    @GetMapping("/")
+    @Autowired
+    JsonController(S3Client s3Client) {
+        this.s3Client = s3Client;
+    }
+
+    @GetMapping("")
     public String gethome() {
         return "home";
     }
 
-    @CrossOrigin
     @GetMapping("/task")
     public List<Task> getTask(){
         List<Task> all = (List)taskRepository.findAll();
@@ -56,7 +65,6 @@ public class JsonController {
         return t;
     }
 
-    @CrossOrigin
     @GetMapping("/users/{name}/tasks")
     public List<Task> taskWithName(@PathVariable String name){
         List<Task> t = taskRepository.findByAssignee(name);
@@ -69,6 +77,24 @@ public class JsonController {
         t.setAssignee(assignee);
         t.setStatus("Assigned");
         taskRepository.save(t);
+        return t;
+    }
+
+    @PostMapping("/task/{id}/images")
+    public List<Task> uploadFile(
+            @PathVariable UUID id,
+            @RequestPart(value = "file") MultipartFile file
+    ){
+        Task t = taskRepository.findById(id).get();
+        String pic = this.s3Client.uploadFile(file);
+        t.setPic(pic);
+        List<Task> allTask = (List)taskRepository.findAll();
+        return allTask;
+    }
+
+    @GetMapping("/tasks/{id}")
+    public Task uploadFile(@PathVariable UUID id){
+        Task t = taskRepository.findById(id).get();
         return t;
     }
 }
