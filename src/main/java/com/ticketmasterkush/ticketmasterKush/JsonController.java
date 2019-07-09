@@ -81,13 +81,11 @@ public class JsonController {
     }
 
     @PostMapping("/task/{id}/images")
-    public List<Task> uploadFile(
-            @PathVariable UUID id,
-            @RequestPart(value = "file") MultipartFile file
-    ){
+    public List<Task> uploadFile(@PathVariable UUID id, @RequestPart(value = "file") MultipartFile file){
         Task t = taskRepository.findById(id).get();
         String pic = this.s3Client.uploadFile(file);
         t.setPic(pic);
+        taskRepository.save(t);
         List<Task> allTask = (List)taskRepository.findAll();
         return allTask;
     }
