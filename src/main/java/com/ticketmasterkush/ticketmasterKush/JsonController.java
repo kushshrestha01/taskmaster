@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 import java.util.UUID;
@@ -81,13 +82,12 @@ public class JsonController {
     }
 
     @PostMapping("/task/{id}/images")
-    public List<Task> uploadFile(@PathVariable UUID id, @RequestPart(value = "file") MultipartFile file){
+    public RedirectView uploadFile(@PathVariable UUID id, @RequestPart(value = "file") MultipartFile file){
         Task t = taskRepository.findById(id).get();
         String pic = this.s3Client.uploadFile(file);
         t.setPic(pic);
         taskRepository.save(t);
-        List<Task> allTask = (List)taskRepository.findAll();
-        return allTask;
+        return new RedirectView("http://taskmaster-react-frontend.s3-website.us-east-2.amazonaws.com");
     }
 
     @GetMapping("/tasks/{id}")
