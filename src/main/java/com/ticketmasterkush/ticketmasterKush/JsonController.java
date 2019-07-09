@@ -16,6 +16,11 @@ public class JsonController {
     @Autowired
     TaskRepository taskRepository;
 
+    @Autowired
+    JsonController(S3Client s3Client) {
+        this.s3Client = s3Client;
+    }
+
     @GetMapping("/")
     public String gethome() {
         return "home";
@@ -69,4 +74,6 @@ public class JsonController {
         taskRepository.save(t);
         return t;
     }
+
+
 }
