@@ -8,6 +8,8 @@ public class TicketmasterKushApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(TicketmasterKushApplication.class, args);
+		System.out.println("app is running");
 	}
+
 
 }

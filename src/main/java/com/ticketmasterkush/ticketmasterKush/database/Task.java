@@ -14,6 +14,7 @@ public class Task {
     private String description;
     private String status;
     private String assignee;
+    private String pic;
 
     public Task(){}
 
@@ -72,5 +73,13 @@ public class Task {
 
     public void setAssignee(String assignee) {
         this.assignee = assignee;
+    }
+
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic;
     }
 }
