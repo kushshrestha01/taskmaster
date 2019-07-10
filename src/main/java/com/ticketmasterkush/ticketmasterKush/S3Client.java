@@ -15,6 +15,7 @@ import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 
 @Service
@@ -34,6 +35,9 @@ public class S3Client {
     @Value("${amazon.aws.bucket}")
     private String bucket;
 
+    @Value("${amazon.S3.endpoint.resized}")
+    private String resizedEndpointUrl;
+
 
     @PostConstruct
     private void initializeAmazon() {
@@ -41,19 +45,25 @@ public class S3Client {
         this.s3client = new AmazonS3Client(credentials);
     }
 
-    public String uploadFile(MultipartFile multipartFile) {
+    public ArrayList<String> uploadFile(MultipartFile multipartFile) {
         String fileUrl = "";
+        String resizeUrl = "";
+        ArrayList<String> result = new ArrayList<String>();
         try {
             File file = convertMultiPartToFile(multipartFile);
             String fileName = generateFileName(multipartFile);
             fileUrl = endpointUrl + "/" + fileName;
+            result.add(fileUrl);
             uploadFileTos3bucket(fileName, file);
+            resizeUrl = resizedEndpointUrl + "/resized-" + fileName;
+            result.add(resizeUrl);
             file.delete();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return fileUrl;
+        return result;
     }
+
 
     private File convertMultiPartToFile(MultipartFile file) throws IOException {
         File convFile = new File(file.getOriginalFilename());

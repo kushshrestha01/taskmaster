@@ -15,6 +15,7 @@ public class Task {
     private String status;
     private String assignee;
     private String pic;
+    private String resized;
 
     public Task(){}
 
@@ -81,5 +82,13 @@ public class Task {
 
     public void setPic(String pic) {
         this.pic = pic;
+    }
+
+    public String getResized() {
+        return resized;
+    }
+
+    public void setResized(String resized) {
+        this.resized = resized;
     }
 }
