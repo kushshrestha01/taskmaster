@@ -54,3 +54,6 @@ http://taskmaster-react-frontend.s3-website.us-east-2.amazonaws.com
 
 ## Deployed back end
 taskmaster.us-east-2.elasticbeanstalk.com 
+
+### Reference:
+https://docs.aws.amazon.com/lambda/latest/dg/with-s3-example.html
