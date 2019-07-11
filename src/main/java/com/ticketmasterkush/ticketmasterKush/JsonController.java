@@ -89,8 +89,8 @@ public class JsonController {
         t.setPic(list.get(0));
         t.setResized(list.get(1));
         taskRepository.save(t);
-//        return new RedirectView("http://taskmaster-react-frontend.s3-website.us-east-2.amazonaws.com");
-        return new RedirectView("http://localhost:3000/");
+        return new RedirectView("http://taskmaster-react-frontend.s3-website.us-east-2.amazonaws.com");
+//        return new RedirectView("http://localhost:3000/");
 
     }
 
