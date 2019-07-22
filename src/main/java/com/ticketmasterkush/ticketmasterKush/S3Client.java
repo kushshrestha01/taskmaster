@@ -74,8 +74,6 @@ public class S3Client {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else {
-
         }
         return result;
     }
