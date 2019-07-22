@@ -54,15 +54,15 @@ public class S3Client {
         String resizeUrl = "";
         ArrayList<String> result = new ArrayList<String>();
         long size = multipartFile.getSize();
-        if(size > 350000) {
             try {
-                String queueUrl = System.getenv("Queue");
-                SendMessageRequest send_msg_request = new SendMessageRequest()
-                        .withQueueUrl(queueUrl)
-                        .withMessageBody("hello world")
-                        .withDelaySeconds(5);
-                sqs.sendMessage(send_msg_request);
-
+                if(size > 350000) {
+                    String queueUrl = System.getenv("Queue");
+                    SendMessageRequest send_msg_request = new SendMessageRequest()
+                            .withQueueUrl(queueUrl)
+                            .withMessageBody("hello world")
+                            .withDelaySeconds(5);
+                    sqs.sendMessage(send_msg_request);
+                }
                 File file = convertMultiPartToFile(multipartFile);
                 String fileName = generateFileName(multipartFile);
                 fileUrl = endpointUrl + "/" + fileName;
@@ -74,7 +74,6 @@ public class S3Client {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
         return result;
     }
 
