@@ -7,6 +7,9 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.sqs.AmazonSQS;
+import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
+import com.amazonaws.services.sqs.model.SendMessageRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,6 +41,7 @@ public class S3Client {
     @Value("${amazon.S3.endpoint.resized}")
     private String resizedEndpointUrl;
 
+    final AmazonSQS sqs = AmazonSQSClientBuilder.defaultClient();
 
     @PostConstruct
     private void initializeAmazon() {
@@ -49,17 +53,27 @@ public class S3Client {
         String fileUrl = "";
         String resizeUrl = "";
         ArrayList<String> result = new ArrayList<String>();
-        try {
-            File file = convertMultiPartToFile(multipartFile);
-            String fileName = generateFileName(multipartFile);
-            fileUrl = endpointUrl + "/" + fileName;
-            result.add(fileUrl);
-            uploadFileTos3bucket(fileName, file);
-            resizeUrl = resizedEndpointUrl + "/resized-" + fileName;
-            result.add(resizeUrl);
-            file.delete();
-        } catch (Exception e) {
-            e.printStackTrace();
+        long size = multipartFile.getSize();
+        if(size > 350000) {
+            try {
+                String queueUrl = System.getenv("Queue");
+                SendMessageRequest send_msg_request = new SendMessageRequest()
+                        .withQueueUrl(queueUrl)
+                        .withMessageBody("hello world")
+                        .withDelaySeconds(5);
+                sqs.sendMessage(send_msg_request);
+
+//                File file = convertMultiPartToFile(multipartFile);
+//                String fileName = generateFileName(multipartFile);
+//                fileUrl = endpointUrl + "/" + fileName;
+//                result.add(fileUrl);
+//                uploadFileTos3bucket(fileName, file);
+//                resizeUrl = resizedEndpointUrl + "/resized-" + fileName;
+//                result.add(resizeUrl);
+//                file.delete();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return result;
     }

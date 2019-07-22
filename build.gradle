@@ -1,5 +1,5 @@
 plugins {
-	id 'org.springframework.boot' version '2.1.6.RELEASE'
+	id 'org.springframework.boot' version '2.1.5.RELEASE'
 	id 'java'
 }
 
@@ -8,6 +8,13 @@ apply plugin: 'io.spring.dependency-management'
 group = 'com.brookr'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
+
+configurations {
+	developmentOnly
+	runtimeClasspath {
+		extendsFrom developmentOnly
+	}
+}
 
 repositories {
 	mavenCentral()
@@ -19,4 +26,9 @@ dependencies {
 
 	compile 'com.github.derjust:spring-data-dynamodb:5.1.0'
 	compile 'com.amazonaws:aws-java-sdk-dynamodb:1.11.585'
+
+
+	compile 'com.amazonaws:aws-java-sdk-sqs:1.11.587'
+	compile group: 'com.amazonaws', name: 'aws-java-sdk-sns', version: '1.11.595'
+	compile group: 'com.amazonaws', name: 'aws-java-sdk-ses', version: '1.11.595'
 }
