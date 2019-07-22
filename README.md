@@ -4,4 +4,5 @@
 3. [Lab 31](readmeFiles/lab31.md)
 4. [Lab 32](readmeFiles/lab32.md)
 5. [Lab 34](readmeFiles/lab34.md)
+6. [Lab 39](readmeFiles/lab39.md)
 

@@ -63,14 +63,14 @@ public class S3Client {
                         .withDelaySeconds(5);
                 sqs.sendMessage(send_msg_request);
 
-//                File file = convertMultiPartToFile(multipartFile);
-//                String fileName = generateFileName(multipartFile);
-//                fileUrl = endpointUrl + "/" + fileName;
-//                result.add(fileUrl);
-//                uploadFileTos3bucket(fileName, file);
-//                resizeUrl = resizedEndpointUrl + "/resized-" + fileName;
-//                result.add(resizeUrl);
-//                file.delete();
+                File file = convertMultiPartToFile(multipartFile);
+                String fileName = generateFileName(multipartFile);
+                fileUrl = endpointUrl + "/" + fileName;
+                result.add(fileUrl);
+                uploadFileTos3bucket(fileName, file);
+                resizeUrl = resizedEndpointUrl + "/resized-" + fileName;
+                result.add(resizeUrl);
+                file.delete();
             } catch (Exception e) {
                 e.printStackTrace();
             }
